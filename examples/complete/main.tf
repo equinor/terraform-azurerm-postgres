@@ -27,6 +27,8 @@ module "log_analytics" {
   location            = azurerm_resource_group.example.location
 }
 
+data "azurerm_client_config" "current" {}
+
 module "postgres" {
   # source = "github.com/equinor/terraform-azurerm-postgres"
   source = "../.."
@@ -45,6 +47,11 @@ module "postgres" {
   public_network_access_enabled    = true
   ssl_enforcement_enabled          = true
   ssl_minimal_tls_version_enforced = "TLS1_2"
+
+  active_directory_administrator = {
+    login     = "adadmin"
+    object_id = data.azurerm_client_config.current.object_id
+  }
 
   firewall_rules = {
     "azure" = {

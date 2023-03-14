@@ -76,6 +76,17 @@ variable "ssl_minimal_tls_version_enforced" {
   default     = "TLS1_2"
 }
 
+variable "active_directory_administrator" {
+  description = "An Active Directory administrator to configure for this PostgreSQL server."
+
+  type = object({
+    login     = string
+    object_id = string
+  })
+
+  default = null
+}
+
 variable "firewall_rules" {
   description = "A map of firewall rules for this PostgreSQL server."
 
