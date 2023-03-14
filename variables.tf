@@ -21,7 +21,7 @@ variable "administrator_login" {
 variable "sku_name" {
   description = "The SKU name for this PostgreSQL server (tier + family + cores)."
   type        = string
-  default     = "B_Gen4_1"
+  default     = "B_Gen5_1"
 }
 
 variable "storage_mb" {
