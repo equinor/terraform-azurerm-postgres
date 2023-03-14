@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/equinor/terraform-azurerm-postgres/compare/v1.0.0...v1.1.0) (2023-03-14)
+
+
+### Features
+
+* set Active Directory administrator ([#8](https://github.com/equinor/terraform-azurerm-postgres/issues/8)) ([7ae9dd3](https://github.com/equinor/terraform-azurerm-postgres/commit/7ae9dd3a09c1c8412c94c12c44747a412ba65821))
+* set firewall rules ([#6](https://github.com/equinor/terraform-azurerm-postgres/issues/6)) ([6dd57ca](https://github.com/equinor/terraform-azurerm-postgres/commit/6dd57ca1c5992da7892fedde013ea1aec4413c7b))
+
 ## 0.1.0 (2023-03-14)
 
 
