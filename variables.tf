@@ -23,6 +23,11 @@ variable "administrator_login" {
   type        = string
 }
 
+variable "log_analytics_workspace_id" {
+  description = "The ID of the Log Analytics workspace to send diagnostics to."
+  type        = string
+}
+
 variable "sku_name" {
   description = "The SKU name for this PostgreSQL server (tier + family + cores)."
   type        = string
@@ -69,6 +74,18 @@ variable "ssl_minimal_tls_version_enforced" {
   description = "The minimum TLS version to support on this PostgreSQL server."
   type        = string
   default     = "TLS1_2"
+}
+
+variable "diagnostic_setting_name" {
+  description = "The name of this diagnostic setting."
+  type        = string
+  default     = "audit-logs"
+}
+
+variable "diagnostic_setting_enabled_log_categories" {
+  description = "A list of log categories to be enabled for this diagnostic setting."
+  type        = list(string)
+  default     = ["PostgreSQLLogs"]
 }
 
 variable "tags" {

@@ -51,3 +51,27 @@ resource "azurerm_postgresql_database" "this" {
   charset             = "UTF8"
   collation           = "English_United States.1252"
 }
+
+resource "azurerm_monitor_diagnostic_setting" "this" {
+  name                       = var.diagnostic_setting_name
+  target_resource_id         = azurerm_postgresql_server.this.id
+  log_analytics_workspace_id = var.log_analytics_workspace_id
+
+  dynamic "enabled_log" {
+    for_each = toset(var.diagnostic_setting_enabled_log_categories)
+
+    content {
+      category = enabled_log.value
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+    enabled  = false
+
+    retention_policy {
+      days    = 0
+      enabled = false
+    }
+  }
+}
