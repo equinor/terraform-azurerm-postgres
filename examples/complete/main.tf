@@ -46,5 +46,13 @@ module "postgres" {
   ssl_enforcement_enabled          = true
   ssl_minimal_tls_version_enforced = "TLS1_2"
 
+  firewall_rules = {
+    "azure" = {
+      name             = "AllowAllWindowsAzureIps"
+      start_ip_address = "0.0.0.0"
+      end_ip_address   = "0.0.0.0"
+    }
+  }
+
   tags = local.tags
 }

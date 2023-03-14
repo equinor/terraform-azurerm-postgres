@@ -76,6 +76,24 @@ variable "ssl_minimal_tls_version_enforced" {
   default     = "TLS1_2"
 }
 
+variable "firewall_rules" {
+  description = "A map of firewall rules for this PostgreSQL server."
+
+  type = map(object({
+    name             = string
+    start_ip_address = string
+    end_ip_address   = string
+  }))
+
+  default = {
+    "azure" = {
+      name             = "AllowAllWindowsAzureIps"
+      start_ip_address = "0.0.0.0"
+      end_ip_address   = "0.0.0.0"
+    }
+  }
+}
+
 variable "diagnostic_setting_name" {
   description = "The name of this diagnostic setting."
   type        = string
