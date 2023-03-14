@@ -30,12 +30,6 @@ variable "storage_mb" {
   default     = 5120
 }
 
-variable "version" {
-  description = "The version of PostgreSQL to use."
-  type        = string
-  default     = "11"
-}
-
 variable "backup_retention_days" {
   description = "The number of days that backups should be retained for this PostgreSQL server."
   type        = number

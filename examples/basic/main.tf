@@ -2,19 +2,21 @@ provider "azurerm" {
   features {}
 }
 
-resource "random_id" "this" {
+resource "random_id" "example" {
   byte_length = 8
 }
 
-resource "azurerm_resource_group" "this" {
-  name     = "rg-${random_id.this.hex}"
+resource "azurerm_resource_group" "example" {
+  name     = "rg-${random_id.example.hex}"
   location = var.location
 }
 
 module "foobar" {
-  # source = "github.com/equinor/terraform-azurerm-foobar?ref=v0.0.0"
+  # source = "github.com/equinor/terraform-azurerm-postgres"
   source = "../.."
 
-  resource_group_name = azurerm_resource_group.this.name
-  location            = azurerm_resource_group.this.location
+  server_name         = "psql-${random_id.example.hex}"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+  administrator_login = "psqladmin"
 }
