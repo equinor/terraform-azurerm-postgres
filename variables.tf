@@ -1,3 +1,8 @@
+variable "database_name" {
+  description = "The name of this PostgreSQL database."
+  type        = string
+}
+
 variable "server_name" {
   description = "The name of this PostgreSQL server."
   type        = string

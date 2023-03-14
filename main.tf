@@ -27,7 +27,7 @@ resource "azurerm_postgresql_server" "this" {
   auto_grow_enabled            = var.auto_grow_enabled
 
   # This property is currently still in development and not supported by Microsoft.
-  # It is strongly suggested to leave this value false as not doing so can lead to unclear error messages
+  # It is strongly suggested to leave this value false as not doing so can lead to unclear error messages.
   infrastructure_encryption_enabled = false
 
   public_network_access_enabled    = var.public_network_access_enabled
@@ -35,4 +35,19 @@ resource "azurerm_postgresql_server" "this" {
   ssl_minimal_tls_version_enforced = var.ssl_minimal_tls_version_enforced
 
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [
+      # Allow administrator login password to be rotated outside of Terraform.
+      administrator_login_password
+    ]
+  }
+}
+
+resource "azurerm_postgresql_database" "this" {
+  name                = var.database_name
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_postgresql_server.this.name
+  charset             = "UTF8"
+  collation           = "English_United States.1252"
 }

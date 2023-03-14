@@ -15,6 +15,7 @@ module "postgres" {
   # source = "github.com/equinor/terraform-azurerm-postgres"
   source = "../.."
 
+  database_name       = "example-db"
   server_name         = "psql-${random_id.example.hex}"
   resource_group_name = azurerm_resource_group.example.name
   location            = azurerm_resource_group.example.location
