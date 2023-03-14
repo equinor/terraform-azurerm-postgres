@@ -44,6 +44,18 @@ resource "azurerm_postgresql_server" "this" {
   }
 }
 
+data "azurerm_client_config" "current" {}
+
+resource "azurerm_postgresql_active_directory_administrator" "this" {
+  count = var.active_directory_administrator != null ? 1 : 0
+
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_postgresql_server.this.name
+  login               = var.active_directory_administrator["login"]
+  object_id           = var.active_directory_administrator["object_id"]
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+}
+
 resource "azurerm_postgresql_firewall_rule" "this" {
   for_each = var.firewall_rules
 
