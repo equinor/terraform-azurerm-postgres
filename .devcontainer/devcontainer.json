@@ -3,6 +3,11 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
+  "containerEnv": {
+    "ARM_USE_OIDC": "false",
+    "ARM_USE_MSI": "false",
+    "ARM_USE_CLI": "true"
+  },
   "runArgs": [
     "--env-file",
     ".devcontainer/devcontainer.env"

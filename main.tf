@@ -46,14 +46,23 @@ resource "azurerm_postgresql_server" "this" {
 
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_postgresql_active_directory_administrator" "this" {
+# Creating resource "azurerm_postgresql_active_directory_administrator" throws error (#15).
+# Create Active Directory administrator resource using AzAPI provider instead.
+resource "azapi_resource" "active_directory_admin" {
   count = var.active_directory_administrator != null ? 1 : 0
 
-  resource_group_name = var.resource_group_name
-  server_name         = azurerm_postgresql_server.this.name
-  login               = var.active_directory_administrator["login"]
-  object_id           = var.active_directory_administrator["object_id"]
-  tenant_id           = data.azurerm_client_config.current.tenant_id
+  type      = "Microsoft.DBforPostgreSQL/servers/administrators@2017-12-01"
+  parent_id = azurerm_postgresql_server.this.id
+  name      = "activeDirectory"
+
+  body = jsonencode({
+    properties = {
+      administratorType = "ActiveDirectory"
+      login             = var.active_directory_administrator["login"]
+      sid               = var.active_directory_administrator["object_id"]
+      tenantId          = data.azurerm_client_config.current.tenant_id
+    }
+  })
 }
 
 resource "azurerm_postgresql_firewall_rule" "this" {
