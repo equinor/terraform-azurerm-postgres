@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/equinor/terraform-azurerm-postgres/compare/v1.1.0...v1.1.1) (2023-12-20)
+
+
+### Bug Fixes
+
+* remove diagnostic setting retention policies ([#18](https://github.com/equinor/terraform-azurerm-postgres/issues/18)) ([3a8fd0a](https://github.com/equinor/terraform-azurerm-postgres/commit/3a8fd0a934a291b107496beb3e0fc9847d794097))
+
 ## [1.1.0](https://github.com/equinor/terraform-azurerm-postgres/compare/v1.0.0...v1.1.0) (2023-03-14)
 
 
