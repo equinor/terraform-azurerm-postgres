@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/equinor/terraform-azurerm-postgres/compare/v1.1.1...v1.2.0) (2024-02-27)
+
+
+### Features
+
+* disable metrics by default ([#23](https://github.com/equinor/terraform-azurerm-postgres/issues/23)) ([4b47992](https://github.com/equinor/terraform-azurerm-postgres/commit/4b47992bfff99388f704546296c3118c2d35592d))
+
 ## [1.1.1](https://github.com/equinor/terraform-azurerm-postgres/compare/v1.1.0...v1.1.1) (2023-12-20)
 
 
