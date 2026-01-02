@@ -10,21 +10,21 @@ output "database_name" {
 
 output "server_id" {
   description = "The ID of this PostgreSQL server."
-  value       = azurerm_postgresql_server.this.id
+  value       = azurerm_postgresql_flexible_server.this.id
 }
 
 output "server_name" {
   description = "The name of this PostgreSQL server."
-  value       = azurerm_postgresql_server.this.name
+  value       = azurerm_postgresql_flexible_server.this.name
 }
 
 output "administrator_login" {
   description = "The administrator login of this PostgreSQL server."
-  value       = azurerm_postgresql_server.this.name
+  value       = azurerm_postgresql_flexible_server.this.administrator_login
 }
 
 output "administrator_login_password" {
   description = "The administrator login password of this PostgreSQL server."
-  value       = azurerm_postgresql_server.this.administrator_login_password
+  value       = azurerm_postgresql_flexible_server.this.administrator_login_password
   sensitive   = true
 }
