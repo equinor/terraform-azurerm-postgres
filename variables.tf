@@ -64,18 +64,6 @@ variable "public_network_access_enabled" {
   default     = true
 }
 
-variable "ssl_enforcement_enabled" {
-  description = "Should SSL be enforced on connections?"
-  type        = bool
-  default     = true
-}
-
-variable "ssl_minimal_tls_version_enforced" {
-  description = "The minimum TLS version to support on this PostgreSQL server."
-  type        = string
-  default     = "TLS1_2"
-}
-
 variable "active_directory_administrator" {
   description = "An Active Directory administrator to configure for this PostgreSQL server."
 

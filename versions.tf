@@ -8,8 +8,9 @@ terraform {
     }
 
     azurerm = {
-      source  = "hashicorp/azurerm"
-      version = ">= 3.0.0"
+      source = "hashicorp/azurerm"
+      ### Required to support azurerm_postgresql_flexible_server resource with postgresql version 18
+      version = ">= 4.55.0"
     }
   }
 }
