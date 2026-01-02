@@ -33,13 +33,6 @@ resource "azurerm_postgresql_flexible_server" "this" {
 
 
   tags = var.tags
-
-  lifecycle {
-    ignore_changes = [
-      # Allow administrator login password to be rotated outside of Terraform.
-      administrator_login_password
-    ]
-  }
 }
 
 data "azurerm_client_config" "current" {}
