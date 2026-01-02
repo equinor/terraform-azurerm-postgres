@@ -48,7 +48,7 @@ resource "azurerm_postgresql_active_directory_administrator" "this" {
   count = var.active_directory_administrator != null ? 1 : 0
 
   resource_group_name = var.resource_group_name
-  server_name         = azurerm_postgresql_server.this.name
+  server_name         = azurerm_postgresql_flexible_server.this.name
   login               = var.active_directory_administrator["login"]
   object_id           = var.active_directory_administrator["object_id"]
   tenant_id           = data.azurerm_client_config.current.tenant_id
@@ -59,7 +59,7 @@ resource "azurerm_postgresql_firewall_rule" "this" {
 
   name                = each.value["name"]
   resource_group_name = var.resource_group_name
-  server_name         = azurerm_postgresql_server.this.name
+  server_name         = azurerm_postgresql_flexible_server.this.name
   start_ip_address    = each.value["start_ip_address"]
   end_ip_address      = each.value["end_ip_address"]
 }
@@ -67,14 +67,14 @@ resource "azurerm_postgresql_firewall_rule" "this" {
 resource "azurerm_postgresql_database" "this" {
   name                = var.database_name
   resource_group_name = var.resource_group_name
-  server_name         = azurerm_postgresql_server.this.name
+  server_name         = azurerm_postgresql_flexible_server.this.name
   charset             = "UTF8"
   collation           = "English_United States.1252"
 }
 
 resource "azurerm_monitor_diagnostic_setting" "this" {
   name                       = var.diagnostic_setting_name
-  target_resource_id         = azurerm_postgresql_server.this.id
+  target_resource_id         = azurerm_postgresql_flexible_server.this.id
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
   dynamic "enabled_log" {
