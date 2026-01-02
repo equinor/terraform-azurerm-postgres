@@ -22,9 +22,3 @@ output "administrator_login" {
   description = "The administrator login of this PostgreSQL server."
   value       = azurerm_postgresql_flexible_server.this.administrator_login
 }
-
-output "administrator_login_password" {
-  description = "The administrator login password of this PostgreSQL server."
-  value       = azurerm_postgresql_flexible_server.this.administrator_login_password
-  sensitive   = true
-}
