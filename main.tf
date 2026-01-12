@@ -29,6 +29,12 @@ resource "azurerm_postgresql_flexible_server" "this" {
   backup_retention_days        = var.backup_retention_days
   geo_redundant_backup_enabled = var.geo_redundant_backup_enabled
   auto_grow_enabled            = var.auto_grow_enabled
+  lifecycle {
+    ignore_changes = [
+      zone,
+      high_availability[0].standby_availability_zone
+    ]
+  }
 
   public_network_access_enabled = var.public_network_access_enabled
 
