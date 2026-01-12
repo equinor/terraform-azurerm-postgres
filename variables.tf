@@ -23,6 +23,12 @@ variable "administrator_login" {
   type        = string
 }
 
+variable "administrator_password" {
+  description = "The administrator password of this PostgreSQL server."
+  type        = string
+  default     = null
+}
+
 variable "log_analytics_workspace_id" {
   description = "The ID of the Log Analytics workspace to send diagnostics to."
   type        = string

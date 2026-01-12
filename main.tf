@@ -19,7 +19,8 @@ resource "azurerm_postgresql_flexible_server" "this" {
   resource_group_name = var.resource_group_name
   location            = var.location
 
-  administrator_login = var.administrator_login
+  administrator_login    = var.administrator_login
+  administrator_password = var.administrator_password != null ? var.administrator_password : random_password.this.result
 
   sku_name   = var.sku_name
   version    = "11"
