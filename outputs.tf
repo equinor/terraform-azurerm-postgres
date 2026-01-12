@@ -1,11 +1,11 @@
 output "database_id" {
   description = "The ID of this PostgreSQL database."
-  value       = azurerm_postgresql_database.this.id
+  value       = azurerm_postgresql_flexible_server_database.this.id
 }
 
 output "database_name" {
   description = "The name of this PostgreSQL database."
-  value       = azurerm_postgresql_database.this.name
+  value       = azurerm_postgresql_flexible_server_database.this.name
 }
 
 output "server_id" {

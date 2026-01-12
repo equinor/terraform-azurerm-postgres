@@ -48,22 +48,20 @@ resource "azurerm_postgresql_flexible_server_active_directory_administrator" "th
   tenant_id           = data.azurerm_client_config.current.tenant_id
 }
 
-resource "azurerm_postgresql_firewall_rule" "this" {
+resource "azurerm_postgresql_flexible_server_firewall_rule" "this" {
   for_each = var.firewall_rules
 
-  name                = each.value["name"]
-  resource_group_name = var.resource_group_name
-  server_name         = azurerm_postgresql_flexible_server.this.name
-  start_ip_address    = each.value["start_ip_address"]
-  end_ip_address      = each.value["end_ip_address"]
+  name             = each.value["name"]
+  server_id        = azurerm_postgresql_flexible_server.this.id
+  start_ip_address = each.value["start_ip_address"]
+  end_ip_address   = each.value["end_ip_address"]
 }
 
-resource "azurerm_postgresql_database" "this" {
-  name                = var.database_name
-  resource_group_name = var.resource_group_name
-  server_name         = azurerm_postgresql_flexible_server.this.name
-  charset             = "UTF8"
-  collation           = "English_United States.1252"
+resource "azurerm_postgresql_flexible_server_database" "this" {
+  name      = var.database_name
+  server_id = azurerm_postgresql_flexible_server.this.id
+  charset   = "UTF8"
+  collation = "en_US.utf8"
 }
 
 resource "azurerm_monitor_diagnostic_setting" "this" {

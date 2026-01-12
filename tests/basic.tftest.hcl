@@ -19,13 +19,8 @@ run "basic_defaults" {
   }
 
   assert {
-    condition     = azurerm_postgresql_database.this.name == run.setup_tests.database_name
+    condition     = azurerm_postgresql_flexible_server_database.this.name == run.setup_tests.database_name
     error_message = "PostgreSQL database name should match the setup test database name"
-  }
-
-  assert {
-    condition     = azurerm_postgresql_database.this.resource_group_name == run.setup_tests.resource_group_name
-    error_message = "PostgreSQL database resource group should match the setup test resource group"
   }
 
   assert {
