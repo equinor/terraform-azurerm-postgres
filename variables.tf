@@ -29,15 +29,15 @@ variable "log_analytics_workspace_id" {
 }
 
 variable "sku_name" {
-  description = "The SKU name for this PostgreSQL server (tier + family + cores)."
+  description = "The SKU name for this PostgreSQL server (tier + name)."
   type        = string
-  default     = "B_Gen5_1"
+  default     = "B1ms"
 }
 
 variable "storage_mb" {
   description = "The max storage allowed for this PostgreSQL server."
   type        = number
-  default     = 5120
+  default     = 32768
 }
 
 variable "backup_retention_days" {
@@ -70,6 +70,7 @@ variable "active_directory_administrator" {
   type = object({
     login     = string
     object_id = string
+    type      = string
   })
 
   default = null
