@@ -31,7 +31,7 @@ variable "log_analytics_workspace_id" {
 variable "sku_name" {
   description = "The SKU name for this PostgreSQL server (tier + name)."
   type        = string
-  default     = "B1ms"
+  default     = "B_Standard_B1ms"
 }
 
 variable "storage_mb" {

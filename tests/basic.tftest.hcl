@@ -29,7 +29,7 @@ run "basic_defaults" {
   }
 
   assert {
-    condition     = azurerm_postgresql_server.this.location == run.setup_tests.location
+    condition     = azurerm_postgresql_flexible_server.this.location == run.setup_tests.location
     error_message = "PostgreSQL database server location should match the setup test location"
   }
 }
