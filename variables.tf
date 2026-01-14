@@ -23,21 +23,27 @@ variable "administrator_login" {
   type        = string
 }
 
+variable "administrator_password" {
+  description = "The administrator password of this PostgreSQL server."
+  type        = string
+  default     = null
+}
+
 variable "log_analytics_workspace_id" {
   description = "The ID of the Log Analytics workspace to send diagnostics to."
   type        = string
 }
 
 variable "sku_name" {
-  description = "The SKU name for this PostgreSQL server (tier + family + cores)."
+  description = "The SKU name for this PostgreSQL server (tier + name)."
   type        = string
-  default     = "B_Gen5_1"
+  default     = "B_Standard_B1ms"
 }
 
 variable "storage_mb" {
   description = "The max storage allowed for this PostgreSQL server."
   type        = number
-  default     = 5120
+  default     = 32768
 }
 
 variable "backup_retention_days" {
@@ -64,24 +70,13 @@ variable "public_network_access_enabled" {
   default     = true
 }
 
-variable "ssl_enforcement_enabled" {
-  description = "Should SSL be enforced on connections?"
-  type        = bool
-  default     = true
-}
-
-variable "ssl_minimal_tls_version_enforced" {
-  description = "The minimum TLS version to support on this PostgreSQL server."
-  type        = string
-  default     = "TLS1_2"
-}
-
 variable "active_directory_administrator" {
   description = "An Active Directory administrator to configure for this PostgreSQL server."
 
   type = object({
     login     = string
     object_id = string
+    type      = string
   })
 
   default = null

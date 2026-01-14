@@ -14,73 +14,66 @@ resource "random_password" "this" {
   min_special = 1
 }
 
-resource "azurerm_postgresql_server" "this" {
+resource "azurerm_postgresql_flexible_server" "this" {
   name                = var.server_name
   resource_group_name = var.resource_group_name
   location            = var.location
 
-  administrator_login          = var.administrator_login
-  administrator_login_password = random_password.this.result
+  administrator_login    = var.administrator_login
+  administrator_password = var.administrator_password != null ? var.administrator_password : random_password.this.result
 
   sku_name   = var.sku_name
-  version    = "11"
+  version    = "18"
   storage_mb = var.storage_mb
 
   backup_retention_days        = var.backup_retention_days
   geo_redundant_backup_enabled = var.geo_redundant_backup_enabled
   auto_grow_enabled            = var.auto_grow_enabled
-
-  # This property is currently still in development and not supported by Microsoft.
-  # It is strongly suggested to leave this value false as not doing so can lead to unclear error messages.
-  infrastructure_encryption_enabled = false
-
-  public_network_access_enabled    = var.public_network_access_enabled
-  ssl_enforcement_enabled          = var.ssl_enforcement_enabled
-  ssl_minimal_tls_version_enforced = var.ssl_minimal_tls_version_enforced
-
-  tags = var.tags
-
   lifecycle {
     ignore_changes = [
-      # Allow administrator login password to be rotated outside of Terraform.
-      administrator_login_password
+      zone,
+      high_availability[0].standby_availability_zone
     ]
   }
+
+  public_network_access_enabled = var.public_network_access_enabled
+
+
+  tags = var.tags
 }
 
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_postgresql_active_directory_administrator" "this" {
+resource "azurerm_postgresql_flexible_server_active_directory_administrator" "this" {
   count = var.active_directory_administrator != null ? 1 : 0
 
   resource_group_name = var.resource_group_name
-  server_name         = azurerm_postgresql_server.this.name
-  login               = var.active_directory_administrator["login"]
+  server_name         = azurerm_postgresql_flexible_server.this.name
+  principal_name      = var.active_directory_administrator["login"]
+  principal_type      = var.active_directory_administrator["type"]
   object_id           = var.active_directory_administrator["object_id"]
   tenant_id           = data.azurerm_client_config.current.tenant_id
 }
 
-resource "azurerm_postgresql_firewall_rule" "this" {
+resource "azurerm_postgresql_flexible_server_firewall_rule" "this" {
   for_each = var.firewall_rules
 
-  name                = each.value["name"]
-  resource_group_name = var.resource_group_name
-  server_name         = azurerm_postgresql_server.this.name
-  start_ip_address    = each.value["start_ip_address"]
-  end_ip_address      = each.value["end_ip_address"]
+  name             = each.value["name"]
+  server_id        = azurerm_postgresql_flexible_server.this.id
+  start_ip_address = each.value["start_ip_address"]
+  end_ip_address   = each.value["end_ip_address"]
 }
 
-resource "azurerm_postgresql_database" "this" {
-  name                = var.database_name
-  resource_group_name = var.resource_group_name
-  server_name         = azurerm_postgresql_server.this.name
-  charset             = "UTF8"
-  collation           = "English_United States.1252"
+resource "azurerm_postgresql_flexible_server_database" "this" {
+  name      = var.database_name
+  server_id = azurerm_postgresql_flexible_server.this.id
+  charset   = "UTF8"
+  collation = "en_US.utf8"
 }
 
 resource "azurerm_monitor_diagnostic_setting" "this" {
   name                       = var.diagnostic_setting_name
-  target_resource_id         = azurerm_postgresql_server.this.id
+  target_resource_id         = azurerm_postgresql_flexible_server.this.id
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
   dynamic "enabled_log" {
@@ -91,13 +84,19 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
     }
   }
 
-  dynamic "metric" {
-    for_each = toset(concat(local.diagnostic_setting_metric_categories, var.diagnostic_setting_enabled_metric_categories))
+  dynamic "enabled_log" {
+    for_each = toset(var.diagnostic_setting_enabled_log_categories)
 
     content {
-      # Azure expects explicit configuration of both enabled and disabled metric categories.
-      category = metric.value
-      enabled  = contains(var.diagnostic_setting_enabled_metric_categories, metric.value)
+      category = enabled_log.value
+    }
+  }
+
+  dynamic "enabled_metric" {
+    for_each = toset(var.diagnostic_setting_enabled_metric_categories)
+
+    content {
+      category = enabled_metric.value
     }
   }
 }
