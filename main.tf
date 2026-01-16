@@ -23,7 +23,7 @@ resource "azurerm_postgresql_flexible_server" "this" {
   administrator_password = var.administrator_password != null ? var.administrator_password : random_password.this.result
 
   sku_name   = var.sku_name
-  version    = "18"
+  version    = var.postgresql_flexible_server_version
   storage_mb = var.storage_mb
 
   backup_retention_days        = var.backup_retention_days
