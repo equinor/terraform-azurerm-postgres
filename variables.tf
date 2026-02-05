@@ -29,6 +29,12 @@ variable "administrator_password" {
   default     = null
 }
 
+variable "postgresql_flexible_server_version" {
+  description = "The PostgreSQL version to install"
+  type        = string
+  default     = "18"
+}
+
 variable "log_analytics_workspace_id" {
   description = "The ID of the Log Analytics workspace to send diagnostics to."
   type        = string
