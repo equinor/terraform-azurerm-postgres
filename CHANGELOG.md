@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.0.0](https://github.com/equinor/terraform-azurerm-postgres/compare/v1.2.0...v2.0.0) (2026-02-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* add version variable ([#34](https://github.com/equinor/terraform-azurerm-postgres/issues/34))
+* migrate postgresql server to azurerm_postgresql_flexible_server ([#32](https://github.com/equinor/terraform-azurerm-postgres/issues/32))
+
+### feat\
+
+* add version variable ([#34](https://github.com/equinor/terraform-azurerm-postgres/issues/34)) ([a2b5eef](https://github.com/equinor/terraform-azurerm-postgres/commit/a2b5eef24449dba75a0157735c094ea600b1c3c3))
+
+
+### Features
+
+* migrate postgresql server to azurerm_postgresql_flexible_server ([#32](https://github.com/equinor/terraform-azurerm-postgres/issues/32)) ([80e4d22](https://github.com/equinor/terraform-azurerm-postgres/commit/80e4d226588478c1081a9572ac3a37afb5e9eccc))
+
 ## [1.2.0](https://github.com/equinor/terraform-azurerm-postgres/compare/v1.1.1...v1.2.0) (2024-02-27)
 
 
